@@ -3,7 +3,8 @@
 Adding Appbar and Bottom Navigation Bar
 
 ![Shopping](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/7ba639e7-55c7-46f7-a4ef-da3c7241d627)
-![Uploading Counter.png…]()
+
+![Counter](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/af4d0a71-078d-4256-9296-0684cfe1ee9f)
 
 
 ## Getting Started
