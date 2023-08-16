@@ -1,6 +1,8 @@
 # shopping_2
 
-Adding Appbar and Bottom Navigation Bar
+Adding Appbar and Bottom Navigation Bar.
+
+
 Shopping Grid:
 ![Shopping](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/7ba639e7-55c7-46f7-a4ef-da3c7241d627)
 
