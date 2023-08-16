@@ -1,4 +1,4 @@
-# shopping_2
+# shopping & counter
 
 Adding Appbar and Bottom Navigation Bar.
 
