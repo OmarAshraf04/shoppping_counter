@@ -60,37 +60,6 @@ class Contents extends StatelessWidget {
                           ),
                         ],
                       ))),
-
-              Positioned(
-                right: 0,
-                top: 0,
-                child: IconButton(
-                    color: const Color(0xff5A6D7A),
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Column(
-                              children: [
-                                Text(products.title),
-
-                                //TODO This section keeps giving an error
-
-                                // Text(
-                                //   products.rating.toString()
-                                // ),
-                                //
-                                // Text(
-                                //     products.description
-                                // ),
-                              ],
-                            );
-                          });
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                    )),
-              )
             ],
           ),
           const SizedBox(
@@ -119,7 +88,7 @@ class Contents extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text(
-                                    'You need to be logged in to continue')));
+                                    'Added to cart')));
                       },
                       child: Row(
                         children: [

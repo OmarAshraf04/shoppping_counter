@@ -1,41 +1,57 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_2/ui/screens/cre_account_page.dart';
 import 'package:shopping_2/ui/screens/home_page.dart';
 import 'package:shopping_2/ui/widgets/text_fields.dart';
 
-class LogInPage extends StatefulWidget {
-  const LogInPage({super.key});
+class CreateAccount extends StatefulWidget {
+  const CreateAccount({super.key});
 
   @override
-  State<LogInPage> createState() => _LogInPageState();
+  State<CreateAccount> createState() => _CreateAccountState();
 }
 
-class _LogInPageState extends State<LogInPage> {
+class _CreateAccountState extends State<CreateAccount> {
 
   TextEditingController emailControl = TextEditingController();
   TextEditingController passwordControl = TextEditingController();
+  TextEditingController nameControl = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Future <void> login(
+  Future <void> createAccount(
       {
         required String email,
         required String password,
+        required String name,
+        required String uid,
       }) async
   {
     if (formKey.currentState!.validate())
     {
       try{
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: email,
             password: password
         )
-            .then((value) => {
-              if (value.user != null) {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) {
-                return const MyHomePage();
-              }))
+            .then((value) {
+              if (value.user != null)
+                {
+              saveData(
+                  email: emailControl.text,
+                  name: nameControl.text,
+                  password: passwordControl.text,
+                  uid: value.user!.uid,
+              ).then((value)
+              {
+                if (value)
+                  {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                          return const MyHomePage();
+                        }));
+                  }
+              });
+
         }});
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -45,12 +61,39 @@ class _LogInPageState extends State<LogInPage> {
     }
   }
 
+  Future<bool> saveData(
+  {
+    required String email,
+    required String name,
+    required String password,
+    required String uid,
+  }) async{
+    try
+    {
+      FirebaseFirestore.instance.collection('Users').doc(uid).set({
+        'email' : email,
+        'name' : name,
+        'password' : password,
+        'uid' : uid
+      },
+        SetOptions(merge: true));
+      return true;
+    }
+    catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString()))
+      );
+      return false;
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title:  const Text(
-          'Log in',
+          'Create an account',
           style: TextStyle(
               fontSize: 30
           ),
@@ -72,6 +115,11 @@ class _LogInPageState extends State<LogInPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+              TextFields(
+                controller: nameControl,
+                type: 'Name',
+              ),
 
               TextFields(
                 controller: emailControl,
@@ -106,8 +154,7 @@ class _LogInPageState extends State<LogInPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                validator: (value)
-                {
+                validator: (value) {
                   if (value!.isEmpty)
                   {
                     return 'This field shouldn\'t be empty ';
@@ -115,6 +162,7 @@ class _LogInPageState extends State<LogInPage> {
                   {
                     return 'This field should have more than 6 characters';
                   }
+                  return null;
                 },
               ),
 
@@ -123,15 +171,15 @@ class _LogInPageState extends State<LogInPage> {
               ),
 
               //END of Password Text Field
-              SizedBox(
-                width: 289,
-                child: ElevatedButton(
-                    onPressed: () {
-                      login(
-                        email: emailControl.text,
-                        password: passwordControl.text,
-                      );
-                    },
+              ElevatedButton(
+                  onPressed: () {
+                    createAccount(
+                      email: emailControl.text,
+                      password: passwordControl.text,
+                      name: nameControl.text,
+                      uid: '',
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
                     backgroundColor: Colors.green,
@@ -141,52 +189,13 @@ class _LogInPageState extends State<LogInPage> {
                     textStyle: const TextStyle(
                       fontSize: 35,
                     )
-
                   ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                          'Log in'
-                      ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                        'Create Account'
                     ),
-                ),
-              ),
-
-              const Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'OR',
-                  style: TextStyle(
-                     fontSize: 25,
-                  ),
-                ),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                  MaterialPageRoute(
-                      builder: (context) {
-                        return const CreateAccount();
-                      } ));
-                },
-                style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.green,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    textStyle: const TextStyle(
-                      fontSize: 35,
-                    )
-
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                      'Create Account'
-                  ),
-                ),
+                  )
               ),
             ],
           ),

@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_2/data/data_source/data_source.dart';
+import 'package:shopping_2/ui/screens/login_page.dart';
 import '../widgets/contents.dart';
 
 class ProductPage extends StatefulWidget {
@@ -25,10 +27,36 @@ class _ProductPageState extends State<ProductPage> {
     }
   }
 
+  Future<bool> signOut() async{
+    try{
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } catch (e)
+    {
+      return false;
+    }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            signOut().then((value) {
+              if (value)
+                {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                        return const LogInPage();
+                      }));
+                }
+            });
+          },
+          icon: const Icon(
+              Icons.logout_sharp
+          ),
+        ),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(10),
@@ -37,14 +65,6 @@ class _ProductPageState extends State<ProductPage> {
         foregroundColor: Colors.white,
         backgroundColor: const Color(0xffCC725D),
         title: const Text('All products'),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              Icons.face_5,
-            ),
-          )
-        ],
       ),
 
 

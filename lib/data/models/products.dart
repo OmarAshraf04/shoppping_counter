@@ -4,8 +4,6 @@ class Products {
   final int price;
   final String thumbnail;
   final int stock;
-  // final double rating;
-  // final String description;
 
 
   Products({
@@ -14,8 +12,7 @@ class Products {
     required this.title,
     required this.price,
     required this.stock,
-    // required this.rating,
-    // required this.description,
+
   });
 
   factory Products.fromJson(Map<String, dynamic> json) {
@@ -25,8 +22,6 @@ class Products {
       title: json['title'],
       price: json['price'],
       stock: json['stock'],
-      // rating: json['rating'],
-      // description: json['description']
     );
   }
 }

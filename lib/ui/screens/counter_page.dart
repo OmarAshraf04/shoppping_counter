@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_2/ui/screens/login_page.dart';
 
 class CounterPage extends StatefulWidget {
   const CounterPage({super.key});
@@ -19,10 +21,37 @@ class _CounterPageState extends State<CounterPage> {
     });
   }
 
+  Future<bool> signOut() async{
+    try{
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } catch (e)
+    {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            signOut().then((value) {
+              if (value)
+              {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                      return const LogInPage();
+                    }));
+              }
+            });
+          },
+          icon: const Icon(
+              Icons.logout_sharp
+          ),
+        ),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(10),
@@ -35,16 +64,8 @@ class _CounterPageState extends State<CounterPage> {
             'Counter'
         ),
 
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              Icons.face_5,
-            ),
-          )
-        ],
-
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

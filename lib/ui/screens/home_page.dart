@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_2/ui/screens/counter_page.dart';
 import 'package:shopping_2/ui/screens/products_page.dart';
+import 'package:shopping_2/ui/screens/profile_page.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -23,6 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> screens = [
     const ProductPage(),
     const CounterPage(),
+    const ProfilePage(),
   ];
 
 
@@ -50,6 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.calculate_rounded),
             label: 'Counter',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.face_3),
+            label: 'Profile',
+          )
         ],
       ),
     );

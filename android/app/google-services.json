@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "310788267358",
+    "project_id": "icthub-projects",
+    "storage_bucket": "icthub-projects.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310788267358:android:432eee1b47995cb38843cf",
+        "android_client_info": {
+          "package_name": "com.example.shopping_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310788267358-8f0g188er90gq1orm2rjhpuaba4825jg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPwQsyj0wGZ5kGdCvyM-YQA1Qt8zPXsa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310788267358-8f0g188er90gq1orm2rjhpuaba4825jg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
