@@ -31,7 +31,7 @@ class DataSource {
   static Future<DataUserModel?> receiveFromFireStore() async{
     try {
       String? uid = FirebaseAuth.instance.currentUser!.uid;
-      DataUserModel? user;
+      DataUserModel user;
       DocumentSnapshot userA = await FirebaseFirestore.instance.
       collection('Users').doc(uid).get();
       user = DataUserModel(
