@@ -1,4 +1,4 @@
-# shopping & counter
+# shopping & counter & accounts
 
 Adding Appbar and Bottom Navigation Bar.
 Adding login and sign up screens
