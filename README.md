@@ -1,13 +1,16 @@
-# shopping_2
+# shopping & counter
 
 Adding Appbar and Bottom Navigation Bar.
 
 
 Shopping grid:
-![Shopping](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/7ba639e7-55c7-46f7-a4ef-da3c7241d627)
+
+![Shopping](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/a50468ae-4db5-48bb-ab04-325c5d572bff)
+
 
 Counter Page:
-![Counter](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/af4d0a71-078d-4256-9296-0684cfe1ee9f)
+![Counter](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/bb9a5fc8-e2f4-4875-837a-85570ac0c5dc)
+
 
 
 ## Getting Started
