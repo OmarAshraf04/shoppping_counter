@@ -1,32 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_2/data/cubits/myapp_cubit.dart';
+import 'package:shopping_2/data/cubits/myapp_state.dart';
 import 'package:shopping_2/ui/screens/login_page.dart';
 
-class CounterPage extends StatefulWidget {
-  const CounterPage({super.key});
+// ignore: must_be_immutable
+class CounterPage extends StatelessWidget {
+  CounterPage({super.key});
 
-  @override
-  State<CounterPage> createState() => _CounterPageState();
-}
-
-class _CounterPageState extends State<CounterPage> {
   TextEditingController num1controller = TextEditingController();
+
   TextEditingController num2controller = TextEditingController();
-  double sum = 0;
 
-  void calSum() {
-    setState(() {
-      sum =
-          double.parse(num1controller.text) + double.parse(num2controller.text);
-    });
-  }
-
-  Future<bool> signOut() async{
-    try{
+  Future<bool> signOut() async {
+    try {
       await FirebaseAuth.instance.signOut();
       return true;
-    } catch (e)
-    {
+    } catch (e) {
       return false;
     }
   }
@@ -39,11 +30,10 @@ class _CounterPageState extends State<CounterPage> {
         leading: IconButton(
           onPressed: () {
             signOut().then((value) {
-              if (value)
-              {
+              if (value) {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
-                      return const LogInPage();
+                      return LogInPage();
                     }));
               }
             });
@@ -53,10 +43,10 @@ class _CounterPageState extends State<CounterPage> {
           ),
         ),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-          )
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+            )
         ),
         foregroundColor: Colors.white,
         backgroundColor: const Color(0xffCC725D),
@@ -73,8 +63,8 @@ class _CounterPageState extends State<CounterPage> {
           children: [
             Container(
               decoration: const BoxDecoration(
-                borderRadius:  BorderRadius.all(
-                  Radius.circular(10)
+                borderRadius: BorderRadius.all(
+                    Radius.circular(10)
                 ),
                 color: Color(0xff749BC2),
               ),
@@ -90,7 +80,7 @@ class _CounterPageState extends State<CounterPage> {
             ),
             Container(
               decoration: const BoxDecoration(
-                borderRadius:  BorderRadius.all(
+                borderRadius: BorderRadius.all(
                     Radius.circular(10)
                 ),
                 color: Color(0xff749BC2),
@@ -103,29 +93,42 @@ class _CounterPageState extends State<CounterPage> {
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                  const Color(0xff5A6D7A)
-              ),
-              onPressed: () {
-                calSum();
+            BlocBuilder<MyAppCubit, MyAppState>(
+              builder: (context, state) {
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                      const Color(0xff5A6D7A)
+                  ),
+                  onPressed: () {
+                    context.read<MyAppCubit>().calSum(
+                        double.parse(num1controller.text),
+                        double.parse(num2controller.text)
+                    );
+                  },
+                  child: const Text(
+                    'Find Sum',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                );
               },
-              child: const Text(
-                'Find Sum',
-                style: TextStyle(
-                  fontSize: 15,
-                ),
-              ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Text(
-              'New Sum = $sum',
-              style: const TextStyle(
-                fontSize: 20,
-              ),
+            BlocBuilder<MyAppCubit, MyAppState>(
+              builder: (context, state) {
+                return Text(
+                  'New Sum = ${context
+                      .read<MyAppCubit>()
+                      .sum}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                );
+              },
             ),
           ],
         ),

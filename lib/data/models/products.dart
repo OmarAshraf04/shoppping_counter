@@ -1,9 +1,9 @@
 class Products {
-  final int id;
-  final String title;
-  final int price;
-  final String thumbnail;
-  final int stock;
+  int id;
+  String title;
+  int price;
+  String thumbnail;
+  int stock;
 
 
   Products({

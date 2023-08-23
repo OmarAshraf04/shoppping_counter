@@ -1,24 +1,23 @@
 class DataUserModel {
-
-  final String email;
-  final String name;
-  final String password;
-  final String uid;
-
+  String email;
+  String name;
+  String password;
+  String uid;
+  String image;
 
   DataUserModel({
     required this.name,
     required this.email,
     required this.password,
-    required this.uid
-});
+    required this.uid,
+    required this.image});
 
   factory DataUserModel.fromJson(Map<String, dynamic> json) {
     return DataUserModel(
-      name: json['name'],
-      email: json['email'],
-      password: json['password'],
-      uid: json['id']
-    );
+        name: json['name'],
+        email: json['email'],
+        password: json['password'],
+        uid: json['uid'],
+        image: json['image']);
   }
 }

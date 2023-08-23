@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> screens = [
     const ProductPage(),
-    const CounterPage(),
+    CounterPage(),
     const ProfilePage(),
   ];
 
@@ -34,29 +34,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body: screens[currentIndex],
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          goPage(index);
-        },
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.black,
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color(0xff300046),
+          borderRadius: BorderRadius.circular(50)
+        ),
+        child: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (index) {
+            goPage(index);
+          },
+          backgroundColor: Colors.transparent,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: const Color(0xff8391A1),
 
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calculate_rounded),
-            label: 'Counter',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.face_3),
-            label: 'Profile',
-          )
-        ],
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calculate_rounded),
+              label: 'Counter',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.face_3),
+              label: 'Profile',
+            )
+          ],
+        ),
       ),
     );
   }

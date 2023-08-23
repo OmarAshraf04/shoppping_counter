@@ -1,41 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_2/data/data_source/data_source.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_2/data/cubits/myapp_cubit.dart';
+import 'package:shopping_2/data/cubits/myapp_state.dart';
 import 'package:shopping_2/ui/screens/login_page.dart';
 import '../widgets/contents.dart';
 
-class ProductPage extends StatefulWidget {
+class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
 
-  @override
-  State<ProductPage> createState() => _ProductPageState();
-}
-
-class _ProductPageState extends State<ProductPage> {
-  @override
-  void initState() {
-    super.initState();
-
-    if (DataSource.products.isEmpty) {
-      Future.delayed(Duration.zero, () async {
-        var data = await DataSource.receive();
-        setState(() {
-          DataSource.products = data;
-          DataSource.isLoading = false;
-        });
-      });
-    }
-  }
-
-  Future<bool> signOut() async{
-    try{
+  // @override
+  Future<bool> signOut() async {
+    try {
       await FirebaseAuth.instance.signOut();
       return true;
-    } catch (e)
-    {
+    } catch (e) {
       return false;
     }
-}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +26,15 @@ class _ProductPageState extends State<ProductPage> {
         leading: IconButton(
           onPressed: () {
             signOut().then((value) {
-              if (value)
-                {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                        return const LogInPage();
-                      }));
-                }
+              if (value) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return LogInPage();
+                }));
+              }
             });
           },
-          icon: const Icon(
-              Icons.logout_sharp
-          ),
+          icon: const Icon(Icons.logout_sharp),
         ),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -68,17 +47,40 @@ class _ProductPageState extends State<ProductPage> {
       ),
 
 
-      body: GridView.builder(
-        itemBuilder: (context, index) {
-          return DataSource.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : Contents(products: DataSource.products[index],
+      body: BlocBuilder < MyAppCubit , MyAppState >(
+        builder: (context , state) {
+          if (state is LoadingGridState)
+            {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+          else if (state is DoneGridState ||
+              context.read<MyAppCubit>().products.isNotEmpty){
+            return GridView.builder(
+              itemBuilder: (context, index) {
+                return Contents(
+                  products: context.read<MyAppCubit>().products[index],
                 );
+              },
+              itemCount: context.read<MyAppCubit>().products.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
+            );
+          } else{
+            return const Center(
+              child: Text(
+                'Error, please try again later',
+                style: TextStyle(
+                    fontSize:25,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+            );
+          }
         },
-        itemCount: DataSource.products.length,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      ),
+      )
     );
   }
 }
+
+
