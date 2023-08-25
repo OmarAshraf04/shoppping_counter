@@ -8,6 +8,9 @@ Shopping grid:
 
 ![Phonescreen](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/b86e22d8-6a12-4966-8f82-62730822b631)
 
+New Shopping Grid
+
+![Home](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/dd7e6d3e-8686-49d8-8348-44be7a293cc9)
 
 
 Counter Page:
@@ -21,7 +24,11 @@ Profile Page:
 
 New Profile Page
 
-![Profile](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/b5080a76-3cea-4dfa-8a2c-2ba59a586f8b)
+![Profile](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/e86be10a-cf8d-45ce-b356-3164b07a99b0)
+
+Log out
+
+![Logout](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/d28991cc-fd31-46f2-88c7-4353657a4751)
 
 
 Log in Page:
@@ -31,8 +38,7 @@ Log in Page:
 
 New Login Page
 
-
-![Login](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/fbbc7389-808c-4183-b3e4-2a7883e61104)
+![Login](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/490be4e9-7a78-4077-b5d0-3d4a09e58bdd)
 
 
 Sign up page
@@ -42,7 +48,8 @@ Sign up page
 
 New Signup Page
 
-![createAcc](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/b47bb185-7453-4996-bb29-7359bc46acab)
+![createAcc](https://github.com/OmarAshraf04/shoppping_counter/assets/141797530/20ccfc39-1866-48e1-881f-2ca9494467c7)
+
 
 FireStore
 
