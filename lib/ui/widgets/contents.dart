@@ -18,12 +18,10 @@ class Contents extends StatelessWidget {
             bottomLeft: Radius.circular(10),
           )),
       child: Column(
-
         children: [
           const SizedBox(
-            height: 10,
+            height: 8,
           ),
-
           Stack(
             children: [
               Container(
@@ -81,14 +79,11 @@ class Contents extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff749BC2)
-                    ),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff749BC2)),
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(
-                                    'Added to cart')));
+                            const SnackBar(content: Text('Added to cart')));
                       },
                       child: Row(
                         children: [

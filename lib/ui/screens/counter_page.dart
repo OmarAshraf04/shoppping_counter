@@ -33,8 +33,8 @@ class CounterPage extends StatelessWidget {
               if (value) {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
-                      return LogInPage();
-                    }));
+                  return LogInPage();
+                }));
               }
             });
           },

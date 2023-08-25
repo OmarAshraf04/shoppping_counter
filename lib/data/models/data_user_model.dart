@@ -5,12 +5,12 @@ class DataUserModel {
   String uid;
   String image;
 
-  DataUserModel({
-    required this.name,
-    required this.email,
-    required this.password,
-    required this.uid,
-    required this.image});
+  DataUserModel(
+      {required this.name,
+      required this.email,
+      required this.password,
+      required this.uid,
+      required this.image});
 
   factory DataUserModel.fromJson(Map<String, dynamic> json) {
     return DataUserModel(

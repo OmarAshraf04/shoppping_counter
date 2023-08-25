@@ -5,6 +5,7 @@ import 'package:shopping_2/data/cubits/myapp_cubit.dart';
 import 'package:shopping_2/data/cubits/myapp_state.dart';
 import 'package:shopping_2/ui/screens/cre_account_page.dart';
 import 'package:shopping_2/ui/screens/home_page.dart';
+import 'package:shopping_2/ui/widgets/textfields.dart';
 
 // ignore: must_be_immutable
 class LogInPage extends StatelessWidget {
@@ -19,6 +20,7 @@ class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffFFFFFF),
       resizeToAvoidBottomInset: false,
       // appBar: AppBar(
       //   title: const Text(
@@ -37,26 +39,24 @@ class LogInPage extends StatelessWidget {
 
       body: Column(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.23,
-          ),
-
+          const Spacer(),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-                'Welcome back! Glad to see you, Again!',
-              style: TextStyle(
-                fontSize: 30,
-                fontFamily: 'RobotoCondensed',
-                fontWeight: FontWeight.bold
-              ),
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Row(
+              children: [
+                Text(
+                  'Welcome back! Glad\nto see you, Again!',
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xff1E232C)),
+                ),
+              ],
             ),
           ),
-
           const SizedBox(
-            height: 20,
+            height: 39,
           ),
-
           Padding(
             padding: const EdgeInsets.all(10),
             child: Form(
@@ -64,47 +64,23 @@ class LogInPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-                  TextFormField(
+                  CustomTextFields(
                     controller: emailControl,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        hintText: 'Enter your email here:',
-                        hintStyle: const TextStyle(
-                          color: Colors.black
-                        )
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty)
-                      {
+                    hint: 'Enter your email',
+                    validation: (value) {
+                      if (value!.isEmpty) {
                         return 'This field shouldn\'t be empty ';
                       }
                       return null;
                     },
                   ),
-
                   const SizedBox(
                     height: 20,
                   ),
-
-                  TextFormField(
+                  CustomTextFields(
                     controller: passwordControl,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        hintText: 'Enter your password here:',
-                        hintStyle: const TextStyle(
-                            color: Colors.black
-                        )
-                    ),
-                    validator: (value) {
+                    hint: 'Enter your password',
+                    validation: (value) {
                       if (value!.isEmpty) {
                         return 'This field shouldn\'t be empty ';
                       } else if (value.length < 6) {
@@ -113,106 +89,94 @@ class LogInPage extends StatelessWidget {
                       return null;
                     },
                   ),
-
                   const SizedBox(
-                    height: 50,
+                    height: 100,
                   ),
-
-                  SizedBox(
-                    width: double.infinity,
-                    child: BlocConsumer<MyAppCubit, MyAppState>(
+                  BlocConsumer<MyAppCubit, MyAppState>(
                       listener: (context, state) {
-                        if(state is DoneLoginState) {
-                          Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => const MyHomePage()));
-                        } else if (state is ErrorLoginState) {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const AlertDialog(
-                                  title: Center(
-                                    child: Text(
-                                      'Error,please try again later.',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold
-                                      ),
-                                    ),
-                                  ),
-                                );
-                            }
-                          );
+                    if (state is DoneLoginState) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyHomePage()));
+                    } else if (state is ErrorLoginState) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              title: Center(
+                                child: Text(
+                                  'Error,please try again later.',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            );
+                          });
+                    }
+                  }, builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          context.read<MyAppCubit>().login(
+                                email: emailControl.text,
+                                password: passwordControl.text,
+                              );
                         }
                       },
-                      builder:  (context,state) {
-                        return ElevatedButton(
-                          onPressed: () {
-                            if(formKey.currentState!.validate()) {
-                              context.read<MyAppCubit>().login(
-                              email: emailControl.text,
-                              password: passwordControl.text,
-                            );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: (state is LoadingLoginState)
-                                  ? Colors.grey
-                                  : const Color(0xff300046),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                              ),
-                              textStyle: const TextStyle(
-                                fontSize: 35,
+                      style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          minimumSize: const Size(double.infinity, 56),
+                          backgroundColor: (state is LoadingLoginState)
+                              ? Colors.grey
+                              : const Color(0xff300046),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          ),
+                          textStyle: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: (state is LoadingLoginState)
+                            ? const CircularProgressIndicator(
+                                color: Color(0xff300046),
+                                backgroundColor: Colors.white,
                               )
-
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: (state is LoadingLoginState)
-                                ? const CircularProgressIndicator(
-                              color: Colors.white,
-                              backgroundColor: Colors.black,
-                            )
-                                : const Text(
-                                'Log in'
-                            ),
-                          ),
-                        );
-                      }
-                    ),
-                  ),
+                            : const Text('Login'),
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
           ),
-
+          const SizedBox(
+            height: 10,
+          ),
           const Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(vertical: 15),
             child: Row(
               children: [
                 Expanded(
                   child: Divider(
-                    color: Colors.grey,
+                    color: Color(0xffE8ECF4),
                     height: 20,
-                    thickness: 10,
+                    thickness: 1,
                     indent: 5,
                     endIndent: 5,
                   ),
                 ),
-
                 Text(
-                    'Or Login with',
-                style: TextStyle(
-                  fontSize: 17.5,
-                  fontFamily: 'RobotoCondensed',
-                  fontStyle: FontStyle.italic
-                ),),
-
+                  'Or Login with',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff6A707C)),
+                ),
                 Expanded(
                   child: Divider(
-                    color: Colors.grey,
+                    color: Color(0xffE8ECF4),
                     height: 20,
-                    thickness: 10,
+                    thickness: 1,
                     indent: 5,
                     endIndent: 5,
                   ),
@@ -220,122 +184,87 @@ class LogInPage extends StatelessWidget {
               ],
             ),
           ),
-
           Row(
             children: [
               Expanded(
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadiusDirectional.all(Radius.circular(10)),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: Colors.black
-                    )
-                  ),
+                      borderRadius: const BorderRadiusDirectional.all(
+                          Radius.circular(10)),
+                      color: Colors.white,
+                      border: Border.all(color: const Color(0xffDADADA))),
                   child: IconButton(
-                      onPressed: () {
-
-                      },
-                      icon: SvgPicture.asset('assets/icons/google.svg')
-                  ),
+                      onPressed: () {},
+                      icon: SvgPicture.asset('assets/icons/facebook.svg')),
                 ),
               ),
-
               Expanded(
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadiusDirectional.all(Radius.circular(10)),
+                      borderRadius: const BorderRadiusDirectional.all(
+                          Radius.circular(10)),
                       color: Colors.white,
-                      border: Border.all(
-                          color: Colors.black
-                      )
-                  ),
+                      border: Border.all(color: const Color(0xffDADADA))),
                   child: IconButton(
-                      onPressed: () {
-
-                      },
-                      icon: SvgPicture.asset('assets/icons/apple.svg',)
-                  ),
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        'assets/icons/google.svg',
+                      )),
                 ),
               ),
-
               Expanded(
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadiusDirectional.all(Radius.circular(10)),
+                      borderRadius: const BorderRadiusDirectional.all(
+                          Radius.circular(10)),
                       color: Colors.white,
-                      border: Border.all(
-                          color: Colors.black
-                      )
-                  ),
+                      border: Border.all(color: const Color(0xffDADADA))),
                   child: IconButton(
-                      onPressed: () {
-
-                      },
-                      icon: SvgPicture.asset('assets/icons/twitter.svg',height: 100,)
-                  ),
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        'assets/icons/apple.svg',
+                        height: 100,
+                      )),
                 ),
               ),
             ],
           ),
-
           const SizedBox(
-            height: 50,
+            height: 45,
           ),
-
-          Container(
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Don\'t have an account?',
-                  style:TextStyle(
-                    fontSize: 20
-                  ),),
-
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(
-                            builder: (context) {
-                              return CreateAccount();
-                            }));
-                    },
-                  child: const Text(
-                    'Register Now',
-                    style:TextStyle(
-                        fontSize: 20,
-                      color: Colors.red,
-                    ),
-                  ),)
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Don\'t have an account?',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff1E232C)),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return CreateAccount();
+                  }));
+                },
+                child: const Text(
+                  'Register Now',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xffF14336),
+                  ),
+                ),
+              )
+            ],
           )
         ],
       ),
     );
   }
 }
-
-// ElevatedButton(
-// onPressed: () {
-
-// },
-// style: ElevatedButton.styleFrom(
-// foregroundColor: Colors.black,
-// backgroundColor: Colors.green,
-// shape: const RoundedRectangleBorder(
-// borderRadius: BorderRadius.all(Radius.circular(10)),
-// ),
-// textStyle: const TextStyle(
-// fontSize: 35,
-// )
-//
-// ),
-
-// ),
-

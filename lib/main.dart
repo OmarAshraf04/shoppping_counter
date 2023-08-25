@@ -16,8 +16,7 @@ Future<void> main() async {
   );
   runApp(BlocProvider<MyAppCubit>(
     create: (context) => MyAppCubit()
-      ..receive()
-      ..receiveFromFireStore(),
+      ..receive(),
     child: const MyApp(),
   ));
 }
@@ -35,6 +34,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Urbanist',
+        bottomSheetTheme: const BottomSheetThemeData(
+          backgroundColor: Colors.transparent
+        )
+      ),
       home: user == null ? LogInPage() : const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );

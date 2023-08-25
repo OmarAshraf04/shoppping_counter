@@ -5,14 +5,12 @@ class Products {
   String thumbnail;
   int stock;
 
-
   Products({
     required this.id,
     required this.thumbnail,
     required this.title,
     required this.price,
     required this.stock,
-
   });
 
   factory Products.fromJson(Map<String, dynamic> json) {

@@ -34,11 +34,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body: screens[currentIndex],
 
-      bottomNavigationBar: Container(
+      bottomSheet: Container(
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: const Color(0xff300046),
-          borderRadius: BorderRadius.circular(50)
+            color: const Color(0xff300046),
+            borderRadius: BorderRadius.circular(50)
         ),
         child: BottomNavigationBar(
           currentIndex: currentIndex,
@@ -46,13 +46,20 @@ class _MyHomePageState extends State<MyHomePage> {
             goPage(index);
           },
           backgroundColor: Colors.transparent,
-          selectedItemColor: Colors.white,
+          selectedItemColor: const Color(0xffFFFFFF),
+          selectedLabelStyle: const TextStyle(
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.w600,
+              fontSize: 15
+          ),
           unselectedItemColor: const Color(0xff8391A1),
+          showUnselectedLabels: false,
 
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
+
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calculate_rounded),

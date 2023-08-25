@@ -71,6 +71,7 @@ flutter:
   assets:
    - assets/themes/
    - assets/icons/
+   - assets/photos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -87,6 +88,15 @@ flutter:
      - family: RobotoCondensed
        fonts:
          - asset: assets/themes/RobotoCondensed-Regular.ttf
-  #
+     - family: Urbanist
+       fonts:
+         - asset : assets/themes/Urbanist-Regular.ttf
+     - family: Poppins
+       fonts:
+         - asset: assets/themes/Poppins-Regular.ttf
+     - family: OpenSans
+       fonts:
+         - asset: assets/themes/OpenSans-Regular.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
